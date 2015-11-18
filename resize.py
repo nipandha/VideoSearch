@@ -10,8 +10,8 @@ credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['
 
 gc = gspread.authorize(credentials)
 
-sheet = gc.open_by_key('1JlAE1J8zmG6-C_pasKg1C8KjhJ3wWwXO9a2CqM254B0')
+sheet = gc.open_by_key('1Imau9PnuvXQCrUW6S_xZK3-76PdsQCUofKCp5fmNR8s')
 worksheet = sheet.get_worksheet(0)
-worksheet.resize(rows=1, cols=20)
+worksheet.resize(rows=, cols=20)
 
 

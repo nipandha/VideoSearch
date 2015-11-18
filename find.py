@@ -1,7 +1,8 @@
 import os
-#from video import video
-import magic
+from video import video
 import sys
+from insert1 import insert_collection
+
 
 def isvideo(filename):
 	print filename
@@ -47,10 +48,13 @@ def article(oldpath):
 			if (os.path.isfile(path)):
 				if(isvideo(item)):
 					#print "Is a video"
-					#vid1=video(path)
+					vid1=video(path)
 				else: 	
+					insert_collection("NotVideo",path,"NotVideo","NotVideo","NotVideo",True,True)
 			else:
 				article(path)
 
+reload(sys)  
+sys.setdefaultencoding('Cp1252')				
 article(sys.argv[1])
 #path= args[1].encode('string-escape')

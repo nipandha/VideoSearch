@@ -29,23 +29,26 @@ def youtube_search(options):
   videos = []
   channels = []
   playlists = []
-
+  videoid=""
   # Add each result to the appropriate list, and then display the lists of
   # matching videos, channels, and playlists.
   for search_result in search_response.get("items", []):
+    
     if search_result["id"]["kind"] == "youtube#video":
-      videos.append("%s (%s)" % (search_result["snippet"]["title"],
-                                 search_result["id"]["videoId"]))
-    elif search_result["id"]["kind"] == "youtube#channel":
-      channels.append("%s (%s)" % (search_result["snippet"]["title"],
-                                   search_result["id"]["channelId"]))
-    elif search_result["id"]["kind"] == "youtube#playlist":
-      playlists.append("%s (%s)" % (search_result["snippet"]["title"],
-                                    search_result["id"]["playlistId"]))
-
-  print "Videos:\n", "\n".join(videos), "\n"
-  print "Channels:\n", "\n".join(channels), "\n"
-  print "Playlists:\n", "\n".join(playlists), "\n"
+      #videos.append("%s (%s)" % (search_result["snippet"]["title"],
+                                 #search_result["id"]["videoId"]))
+      #videoid="%s(splitby)%s(splitby)%s" % (search_result["snippet"]["title"],search_result["id"]["videoId"],search_result["snippet"]["description"])	
+      videoid="%s(splitby)%s(splitby)%s" % (search_result["snippet"]["title"],search_result["snippet"]["description"],search_result["id"]["videoId"])
+    #elif search_result["id"]["kind"] == "youtube#channel":
+     # channels.append("%s (%s)" % (search_result["snippet"]["title"],
+     #                              search_result["id"]["channelId"]))
+   # elif search_result["id"]["kind"] == "youtube#playlist":
+     # playlists.append("%s (%s)" % (search_result["snippet"]["title"],
+      #                              search_result["id"]["playlistId"]))
+  return videoid 	
+  #print "Videos:\n", "\n".join(videos), "\n"
+  #print "Channels:\n", "\n".join(channels), "\n"
+  #print "Playlists:\n", "\n".join(playlists), "\n"
   
 if __name__ == "__main__":
 #print "Prog started"
