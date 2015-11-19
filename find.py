@@ -37,22 +37,37 @@ def isvideo(filename):
 	'.zm1', '.zm2', '.zm3', '.zmv'  )
 	if filename.endswith((video_file_extensions)):
 	    return True
-
+def iswebpage(path):
+	html_file_extensions = ('.css','.js','.png','.jpg','.jpeg','.gif')
+	if (os.path.isdir(path))  :
+		items=os.listdir(path)
+		for item in items:
+			if item.endswith((html_file_extensions)):
+				print "folder: %s"%(path)	
+				return True
+	return False			
 def article(oldpath):
 	#print oldpath
-	if (os.path.isdir(oldpath)):
+	if (os.path.isdir(oldpath))  :
 		items=os.listdir(oldpath)	
+		i=0
+		vid=[]
 		for item in items:
 			path=os.path.join(oldpath, item)	
 			path=os.path.normpath(path)
 			if (os.path.isfile(path)):
 				if(isvideo(item)):
 					#print "Is a video"
-					vid1=video(path)
+					video(path)
 				else: 	
 					insert_collection("NotVideo",path,"NotVideo","NotVideo","NotVideo",True,True)
 			else:
-				article(path)
+			        if(os.path.isdir(path)):    
+				
+					if(not iswebpage(path)):
+						article(path)		
+				else:
+					article(path)
 
 reload(sys)  
 sys.setdefaultencoding('Cp1252')				

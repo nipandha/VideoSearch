@@ -46,7 +46,7 @@ class video():
 	def searchvideo(self):
 		opt=search_options(self.filename) 
 		search_result=youtube_search(opt)
-		print "search_result is: %s"%(search_result)
+		#print "search_result is: %s"%(search_result)
 		if(search_result):
 			results=search_result.split("(splitby)")
 			self.videoid=results[2]
