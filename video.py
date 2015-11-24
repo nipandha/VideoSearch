@@ -1,4 +1,5 @@
 import os
+import shutil
 from search_options import search_options
 from search import *
 from media import *
@@ -6,6 +7,23 @@ from jsonr import duration
 from insert1 import insert_collection
 from insert2 import insert_ruralvideo
  
+ 
+ 
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)	
+
+def tempvideo(oldpath):
+	copypath="F:/Temporary"
+	shutil.copy(oldpath,copypath)
+	ext=os.path.splitext(oldpath)[1]
+	filename=os.path.basename(oldpath)
+	oldname="%s/%s"%(copypath,filename)
+	newname="%s/temp%s"%(copypath,ext)
+	os.rename(oldname,newname)
+	newname=newname.encode('ascii', 'ignore')
+	time=getLength(newname)
+	os.remove(newname)
+	return time
 class video():
 	filename="video name"
 	urlname="video name"
@@ -20,8 +38,10 @@ class video():
 	category="video category"
 	path="video path"
 	description="video description"
+	#asciipath="file path"
 	def __init__(self,path):
 		self.path=path
+		#self.asciipath=oldpath
 		filename=os.path.basename(path);
 		self.filename=os.path.splitext(filename)[0]
 		self.location=os.path.split(path)[0]
@@ -56,8 +76,11 @@ class video():
 			self.isnamematch=self.name_check()
 		self.url="https://www.youtube.com/watch?v=%s"%(self.videoid)	
 		
-	def time_check(self):	
-		self.fileduration=getLength(self.path)
+	def time_check(self):
+		if (is_ascii(self.path)):
+			self.fileduration=getLength(self.path)
+		else:	
+			self.fileduration=tempvideo(self.path)
 		self.urlduration=duration(self.videoid)
 		if(abs(self.fileduration-self.urlduration)<5):
 			return True

@@ -1,11 +1,20 @@
+from __future__ import unicode_literals
 import os
 from video import video
 import sys
 from insert1 import insert_collection
 
 
+def whatisthis(s):
+    if isinstance(s, str):
+        print "ordinary string"
+    elif isinstance(s, unicode):
+        print "unicode string"
+	
+    else:
+        print "not a string"
 def isvideo(filename):
-	print filename
+	#print filename
 	video_file_extensions = (
 	'.264', '.3g2', '.3gp', '.3gp2', '.3gpp', '.3gpp2', '.3mm', '.3p2', '.60d', '.787', '.89', '.aaf', '.aec', '.aep', '.aepx',
 	'.aet', '.aetx', '.ajp', '.ale', '.am', '.amc', '.amv', '.amx', '.anim', '.aqt', '.arcut', '.arf', '.asf', '.asx', '.avb',
@@ -43,17 +52,24 @@ def iswebpage(path):
 		items=os.listdir(path)
 		for item in items:
 			if item.endswith((html_file_extensions)):
-				print "folder: %s"%(path)	
+				#print "folder: %s"%(path)	
 				return True
 	return False			
-def article(oldpath):
+def article(newpath):
 	#print oldpath
-	if (os.path.isdir(oldpath))  :
-		items=os.listdir(oldpath)	
+	fse = sys.getfilesystemencoding()
+	#newpath=unicode(oldpath,'Cp1252')
+	#print newpath
+	if (os.path.isdir(newpath))  :
+		#items=[unicode(x, fse) for x in os.listdir(oldpath)]	
+		items=os.listdir(newpath)
 		i=0
 		vid=[]
+		print len(items)
 		for item in items:
-			path=os.path.join(oldpath, item)	
+			whatisthis(item)
+			#print item
+			path=os.path.join(newpath, item)	
 			path=os.path.normpath(path)
 			if (os.path.isfile(path)):
 				if(isvideo(item)):
@@ -70,6 +86,9 @@ def article(oldpath):
 					article(path)
 
 reload(sys)  
-sys.setdefaultencoding('Cp1252')				
-article(sys.argv[1])
+sys.setdefaultencoding('Cp1252')
+path=sys.argv[1]
+path=unicode(path,'utf-8')
+whatisthis(path)				
+article(path)
 #path= args[1].encode('string-escape')
